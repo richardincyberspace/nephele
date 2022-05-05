@@ -33,6 +33,7 @@ variable "region" {
 }
 
 variable "ubuntu_2004" {
+  # https://docs.oracle.com/en-us/iaas/images/
   description = "OCID for Ubuntu 2004 image in different regions"
   type        = map(string)
   default     = {
