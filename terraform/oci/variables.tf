@@ -15,6 +15,10 @@
 variable "tenancy_ocid" { default = "ocid1.tenancy.oc1..aaaaaaaakjewadm4enszgdgbvtxc4oil5vzqq3tzijrxf6npryanrftntu3a" }
 variable "user_ocid" { default = "ocid1.user.oc1..aaaaaaaa3n3gbyep7zy6rl7gkdgk5tb5yzcxqmvspxewjd4ulzynddyd5oua" }
 variable "fingerprint" { default = "c7:9e:00:7d:4e:56:b5:e0:d7:90:20:e6:d8:02:f1:e3" }
+#variable "private_key_path" { default = "/Users/eweill/.oci/oci_api_key.pem" }
+
+#variable "ssh_public_key" { default = "/Users/eweill/.ssh/id_rsa.pub" }
+#variable "ssh_private_key" { default = "/Users/eweill/.oci/oci_api_key.pem"}
 
 variable "compartment_ocid" {
   description = "Compartment OCID for OCI"
