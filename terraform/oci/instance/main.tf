@@ -13,26 +13,26 @@
 # limitations under the License.
 
 resource "oci_core_instance" "public" {
-  availability_domain    = data.oci_identity_availability_domains.default.availability_domains[0].name
-  compartment_id         = var.compartment_ocid
-  shape                  = var.type
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
+  compartment_id      = var.compartment_ocid
+  shape               = var.type
 
   agent_config {
     is_management_disabled = "false"
   }
 
   create_vnic_details {
-    assign_public_ip = var.public
-    defined_tags   = tomap(var.custom_tags)
-    subnet_id        = var.subnet
+    assign_public_ip  = var.public
+    defined_tags      = tomap(var.custom_tags)
+    subnet_id         = var.subnet
     #subnet_id        = oci_core_subnet.public.id
   }
 
-  defined_tags   = tomap(var.custom_tags)
-  display_name           = "${var.cluster_id}-login"
+  defined_tags        = tomap(var.custom_tags)
+  display_name        = "${var.cluster_id}-login"
   #display_name           = "${local.cluster_id}-login"
 
-  metadata               = {
+  metadata            = {
     ssh_authorized_keys = file(var.ssh.pubkey)
     #ssh_authorized_keys = file(var.ssh_public_key)
   }
@@ -59,18 +59,18 @@ resource "oci_core_instance_configuration" "compute" {
 
       create_vnic_details {
         assign_public_ip       = "false"
-        defined_tags   = tomap(var.custom_tags)
+        defined_tags           = tomap(var.custom_tags)
         display_name           = "${var.cluster_id}-instance-config-vnic"
         skip_source_dest_check = "false"
       }
 
       defined_tags   = tomap(var.custom_tags)
 
-      metadata = {
+      metadata       = {
         ssh_authorized_keys = file(var.ssh.pubkey)
       }
 
-      shape = var.type
+      shape          = var.type
 
       source_details {
         source_type = "image"
@@ -81,16 +81,16 @@ resource "oci_core_instance_configuration" "compute" {
 }
 
 resource "oci_core_instance_pool" "default" {
-  compartment_id = var.compartment_ocid
+  compartment_id            = var.compartment_ocid
   instance_configuration_id = oci_core_instance_configuration.compute.id
   placement_configurations {
     availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
-    primary_subnet_id = var.subnet
+    primary_subnet_id   = var.subnet
   }
 
-  size = var.replicas
+  size                      = var.replicas
 
-  defined_tags   = tomap(var.custom_tags)
+  defined_tags              = tomap(var.custom_tags)
 
-  display_name = "${var.cluster_id}-instance-pool"
+  display_name              = "${var.cluster_id}-instance-pool"
 }

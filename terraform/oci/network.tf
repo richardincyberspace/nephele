@@ -26,7 +26,7 @@ resource "oci_core_subnet" "public" {
   vcn_id              = oci_core_vcn.default.id
 
   availability_domain = lookup(data.oci_identity_availability_domains.default.availability_domains[0], "name")
-  defined_tags   = tomap(var.custom_tags)
+  defined_tags        = tomap(var.custom_tags)
   display_name        = "${local.cluster_id}-public-subnet"
   route_table_id      = oci_core_route_table.public.id
   security_list_ids   = [oci_core_security_list.public_security_list_id.id]
@@ -38,7 +38,7 @@ resource "oci_core_subnet" "private" {
   vcn_id              = oci_core_vcn.default.id
 
   availability_domain = lookup(data.oci_identity_availability_domains.default.availability_domains[0], "name")
-  defined_tags   = tomap(var.custom_tags)
+  defined_tags        = tomap(var.custom_tags)
   display_name        = "${local.cluster_id}-private-subnet"
   route_table_id      = oci_core_route_table.private.id
   security_list_ids   = [oci_core_security_list.private_security_list_id.id]
@@ -71,9 +71,9 @@ resource "oci_core_nat_gateway" "default" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.default.id
 
-  block_traffic = "false"
+  block_traffic  = "false"
   defined_tags   = tomap(var.custom_tags)
-  display_name = "${local.cluster_id}-nat"
+  display_name   = "${local.cluster_id}-nat"
 }
 
 resource "oci_core_route_table" "private" {
