@@ -99,6 +99,7 @@ variable "replicas" {
   default     = null
 }
 
+# Modify with custom tags for your account
 variable "custom_tags" {
   default = {
     "tag1": "value1",
