@@ -24,3 +24,4 @@ variable "config" {}
 variable "subnet" {}
 variable "os_image" {}
 #variable "firewall" {}
+variable "custom_tags" {}

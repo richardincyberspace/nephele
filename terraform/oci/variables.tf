@@ -98,3 +98,11 @@ variable "replicas" {
   })
   default     = null
 }
+
+variable "custom_tags" {
+  default = {
+    "tag1": "value1",
+    "tag2": "value2",
+    "tag3": "value3"
+    }
+}

@@ -23,20 +23,12 @@ resource "oci_core_instance" "public" {
 
   create_vnic_details {
     assign_public_ip = var.public
-    defined_tags     = {
-      "nvidia.app-owner":   "eweill",
-      "nvidia.Application": "BigNLP",
-      "nvidia.cost-center": "0000240842"
-    }
+    defined_tags   = tomap(var.custom_tags)
     subnet_id        = var.subnet
     #subnet_id        = oci_core_subnet.public.id
   }
 
-  defined_tags           = {
-    "nvidia.app-owner":   "eweill",
-    "nvidia.Application": "BigNLP",
-    "nvidia.cost-center": "0000240842"
-  }
+  defined_tags   = tomap(var.custom_tags)
   display_name           = "${var.cluster_id}-login"
   #display_name           = "${local.cluster_id}-login"
 
@@ -55,11 +47,7 @@ resource "oci_core_instance" "public" {
 resource "oci_core_instance_configuration" "compute" {
   compartment_id = var.compartment_ocid
 
-  defined_tags   = {
-    "nvidia.app-owner":   "eweill",
-    "nvidia.Application": "BigNLP",
-    "nvidia.cost-center": "0000240842"
-  }
+  defined_tags   = tomap(var.custom_tags)
   display_name   = "${var.cluster_id}-compute-instance-config"
   #display_name   = "${local.cluster_id}-compute-instance-config"
 
@@ -71,20 +59,12 @@ resource "oci_core_instance_configuration" "compute" {
 
       create_vnic_details {
         assign_public_ip       = "false"
-        defined_tags           = {
-          "nvidia.app-owner": "eweill",
-          "nvidia.Application": "BigNLP",
-          "nvidia.cost-center": "0000240842",
-        }
+        defined_tags   = tomap(var.custom_tags)
         display_name           = "${var.cluster_id}-instance-config-vnic"
         skip_source_dest_check = "false"
       }
 
-      defined_tags = {
-        "nvidia.app-owner": "eweill",
-        "nvidia.Application": "BigNLP",
-        "nvidia.cost-center": "0000240842",
-      }
+      defined_tags   = tomap(var.custom_tags)
 
       metadata = {
         ssh_authorized_keys = file(var.ssh.pubkey)
@@ -110,11 +90,7 @@ resource "oci_core_instance_pool" "default" {
 
   size = var.replicas
 
-  defined_tags   = {
-    "nvidia.app-owner":   "eweill",
-    "nvidia.Application": "BigNLP",
-    "nvidia.cost-center": "0000240842"
-  }
+  defined_tags   = tomap(var.custom_tags)
 
   display_name = "${var.cluster_id}-instance-pool"
 }

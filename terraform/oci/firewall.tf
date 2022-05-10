@@ -16,11 +16,7 @@ resource "oci_core_security_list" "public_security_list_id" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.default.id
 
-  defined_tags   = {
-    "nvidia.app-owner": "eweill",
-    "nvidia.Application": "BigNLP",
-    "nvidia.cost-center": "0000240842"
-  }
+  defined_tags   = tomap(var.custom_tags)
   display_name = "${local.cluster_id}-public-security"
 
   egress_security_rules {
@@ -61,11 +57,7 @@ resource "oci_core_security_list" "private_security_list_id" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.default.id
 
-  defined_tags   = {
-    "nvidia.app-owner": "eweill",
-    "nvidia.Application": "BigNLP",
-    "nvidia.cost-center": "0000240842"
-  }
+  defined_tags   = tomap(var.custom_tags)
   display_name = "${local.cluster_id}-private-security"
 
   egress_security_rules {

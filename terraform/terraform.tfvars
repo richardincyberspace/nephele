@@ -24,6 +24,8 @@
 #region  = "us-west-2"
 #zone    = "us-west-2a"
 
+# OCI
+
 ssh = {
   user         = "nvidia"
   privkey      = "../../ssh/id_rsa"
