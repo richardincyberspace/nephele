@@ -26,7 +26,7 @@ module "instances_login" {
   subnet      = oci_core_subnet.public.id
 }
 
-module "instance_x8v100" {
+module "instances_x8v100" {
   source      = "./instance"
 
   cluster_id  = local.cluster_id
@@ -40,7 +40,7 @@ module "instance_x8v100" {
   subnet      = oci_core_subnet.private.id
 }
 
-module "instance_x8a100" {
+module "instances_x8a100" {
   source      = "./instance"
 
   cluster_id  = local.cluster_id
