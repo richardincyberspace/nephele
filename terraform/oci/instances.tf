@@ -24,6 +24,7 @@ module "instances_login" {
 
   os_image    = var.ubuntu_2004[var.region]
   subnet      = oci_core_subnet.public.id
+  config      = data.template_file.ubuntu_2004.rendered
 }
 
 module "instances_x8v100" {
@@ -38,6 +39,7 @@ module "instances_x8v100" {
 
   os_image    = var.ubuntu_2004[var.region]
   subnet      = oci_core_subnet.private.id
+  config      = data.template_file.ubuntu_2004.rendered
 }
 
 module "instances_x8a100" {
@@ -52,4 +54,5 @@ module "instances_x8a100" {
 
   os_image    = var.ubuntu_2004[var.region]
   subnet      = oci_core_subnet.private.id
+  config      = data.template_file.ubuntu_2004.rendered
 }
