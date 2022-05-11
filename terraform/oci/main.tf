@@ -37,3 +37,7 @@ resource "random_pet" "generator" {
 locals {
   cluster_id = "nephele-${random_pet.generator.id}"
 }
+
+data "oci_identity_availability_domains" "default" {
+  compartment_id = var.compartment_ocid
+}

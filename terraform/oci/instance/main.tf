@@ -34,7 +34,7 @@ resource "oci_core_instance" "public" {
 
   metadata            = {
     ssh_authorized_keys = file(var.ssh.pubkey)
-    #ssh_authorized_keys = file(var.ssh_public_key)
+    user_data           = data.cloudinit_config.ubuntu2004.rendered
   }
 
   source_details {
@@ -68,6 +68,7 @@ resource "oci_core_instance_configuration" "compute" {
 
       metadata       = {
         ssh_authorized_keys = file(var.ssh.pubkey)
+        user_data           = data.cloudinit_config.ubuntu2004.rendered
       }
 
       shape          = var.type
@@ -89,8 +90,6 @@ resource "oci_core_instance_pool" "default" {
   }
 
   size                      = var.replicas
-
   defined_tags              = tomap(var.custom_tags)
-
   display_name              = "${var.cluster_id}-instance-pool"
 }

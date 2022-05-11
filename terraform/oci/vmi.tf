@@ -12,11 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-data "template_file" "ubuntu_2004" {
-  template = templatefile("${path.root}/../config/ubuntu.yml", {
-    ssh_user         = var.ssh.user
-    ssh_pubkey       = jsonencode(file(var.ssh.pubkey))
-    ssh_privkey_host = jsonencode(file(var.ssh.privkey_host))
-    ssh_pubkey_host  = jsonencode(file(var.ssh.pubkey_host)) 
-  })
+data "cloudinit_config" "ubuntu2004" {
+  gzip          = true
+  base64_encode = true
+
+  part {
+    content_type = "text/cloud-config"
+    content      = templatefile("${path.root}/ubuntu.yml", {
+      ssh_user         = var.ssh.user
+      ssh_pubkey       = jsonencode(file(var.ssh.pubkey))
+      ssh_privkey_host = jsonencode(file(var.ssh.privkey_host))
+      ssh_pubkey_host  = jsonencode(file(var.ssh.pubkey_host))
+    })
+  }
 }
