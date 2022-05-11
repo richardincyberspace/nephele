@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "oci_core_instance" "public" {
+resource "oci_core_instance" "login" {
   availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
   compartment_id      = var.compartment_ocid
-  shape               = var.type
+  shape               = var.login_type
 
   agent_config {
     is_management_disabled = "false"
@@ -25,16 +25,13 @@ resource "oci_core_instance" "public" {
     assign_public_ip  = var.public
     defined_tags      = tomap(var.custom_tags)
     subnet_id         = var.subnet
-    #subnet_id        = oci_core_subnet.public.id
   }
 
   defined_tags        = tomap(var.custom_tags)
   display_name        = "${var.cluster_id}-login"
-  #display_name           = "${local.cluster_id}-login"
 
   metadata            = {
-    ssh_authorized_keys = file(var.ssh.pubkey)
-    user_data           = data.cloudinit_config.ubuntu2004.rendered
+    user_data = var.config
   }
 
   source_details {
@@ -49,7 +46,6 @@ resource "oci_core_instance_configuration" "compute" {
 
   defined_tags   = tomap(var.custom_tags)
   display_name   = "${var.cluster_id}-compute-instance-config"
-  #display_name   = "${local.cluster_id}-compute-instance-config"
 
   instance_details {
     instance_type = "compute"
@@ -67,11 +63,10 @@ resource "oci_core_instance_configuration" "compute" {
       defined_tags   = tomap(var.custom_tags)
 
       metadata       = {
-        ssh_authorized_keys = file(var.ssh.pubkey)
-        user_data           = data.cloudinit_config.ubuntu2004.rendered
+        user_data = var.config
       }
 
-      shape          = var.type
+      shape          = var.compute_type
 
       source_details {
         source_type = "image"

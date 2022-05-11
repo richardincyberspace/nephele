@@ -14,7 +14,8 @@
 
 variable "compartment_id" {}
 variable "replicas" {}
-variable "type" {}
+variable "login_type" {}
+variable "compute_type" {}
 variable "public" {}
 variable "name" {}
 variable "cluster_id" {}

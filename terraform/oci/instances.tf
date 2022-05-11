@@ -17,42 +17,42 @@ module "instances_login" {
 
   cluster_id  = local.cluster_id
   name        = "${local.cluster_id}-login"
-  type        = "BM.HPC2.36"
+  login_type  = "BM.HPC2.36"
   replicas    = 1
   public      = true
   preemptible = false
 
   os_image    = var.ubuntu_2004[var.region]
   subnet      = oci_core_subnet.public.id
-  config      = data.template_file.ubuntu_2004.rendered
+  config      = data.cloudinit_config.ubuntu2004.rendered
 }
 
 module "instances_x8v100" {
-  source      = "./instance"
+  source       = "./instance"
 
-  cluster_id  = local.cluster_id
-  name        = "${local.cluster_id}-x8v100"
-  type        = "BM.GPU3.8"
-  replicas    = var.replicas.x8v100
-  public      = false
-  preemptible = var.preemptible
+  cluster_id   = local.cluster_id
+  name         = "${local.cluster_id}-x8v100"
+  compute_type = "BM.GPU3.8"
+  replicas     = var.replicas.x8v100
+  public       = false
+  preemptible  = var.preemptible
 
-  os_image    = var.ubuntu_2004[var.region]
-  subnet      = oci_core_subnet.private.id
-  config      = data.template_file.ubuntu_2004.rendered
+  os_image     = var.ubuntu_2004[var.region]
+  subnet       = oci_core_subnet.private.id
+  config       = data.cloudinit_config.ubuntu2004.rendered
 }
 
 module "instances_x8a100" {
-  source      = "./instance"
+  source       = "./instance"
 
-  cluster_id  = local.cluster_id
-  name        = "${local.cluster_id}-x8a100"
-  type        = "BM.GPU4.8"
-  replicas    = var.replicas.x8a100
-  public      = false
-  preemptible = var.preemptible
+  cluster_id   = local.cluster_id
+  name         = "${local.cluster_id}-x8a100"
+  compute_type = "BM.GPU4.8"
+  replicas     = var.replicas.x8a100
+  public       = false
+  preemptible  = var.preemptible
 
-  os_image    = var.ubuntu_2004[var.region]
-  subnet      = oci_core_subnet.private.id
-  config      = data.template_file.ubuntu_2004.rendered
+  os_image     = var.ubuntu_2004[var.region]
+  subnet       = oci_core_subnet.private.id
+  config       = data.cloudinit_config.ubuntu2004.rendered
 }

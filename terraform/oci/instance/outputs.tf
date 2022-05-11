@@ -27,7 +27,7 @@ data "oci_core_instance" "instance_pool_ips" {
 }
 
 output "public_ips" {
-  value = "${oci_core_instance.public.public_ip}"
+  value = "${oci_core_instance.login.public_ip}"
 }
 
 output "private_ips" {

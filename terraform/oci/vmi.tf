@@ -18,7 +18,7 @@ data "cloudinit_config" "ubuntu2004" {
 
   part {
     content_type = "text/cloud-config"
-    content      = templatefile("${path.root}/ubuntu.yml", {
+    content      = templatefile("${path.root}/../config/ubuntu.yml", {
       ssh_user         = var.ssh.user
       ssh_pubkey       = jsonencode(file(var.ssh.pubkey))
       ssh_privkey_host = jsonencode(file(var.ssh.privkey_host))
