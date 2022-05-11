@@ -17,7 +17,7 @@ module "instances_login" {
 
   cluster_id  = local.cluster_id
   name        = "${local.cluster_id}-login"
-  login_type  = "BM.HPC2.36"
+  type        = "BM.HPC2.36"
   replicas    = 1
   public      = true
   preemptible = false
@@ -32,7 +32,7 @@ module "instances_x8v100" {
 
   cluster_id   = local.cluster_id
   name         = "${local.cluster_id}-x8v100"
-  compute_type = "BM.GPU3.8"
+  type         = "BM.GPU3.8"
   replicas     = var.replicas.x8v100
   public       = false
   preemptible  = var.preemptible
@@ -47,7 +47,7 @@ module "instances_x8a100" {
 
   cluster_id   = local.cluster_id
   name         = "${local.cluster_id}-x8a100"
-  compute_type = "BM.GPU4.8"
+  type         = "BM.GPU4.8"
   replicas     = var.replicas.x8a100
   public       = false
   preemptible  = var.preemptible

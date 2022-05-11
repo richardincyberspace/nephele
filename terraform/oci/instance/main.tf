@@ -12,40 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "oci_core_instance" "login" {
-  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
-  compartment_id      = var.compartment_ocid
-  shape               = var.login_type
-
-  agent_config {
-    is_management_disabled = "false"
-  }
-
-  create_vnic_details {
-    assign_public_ip  = var.public
-    defined_tags      = tomap(var.custom_tags)
-    subnet_id         = var.subnet
-  }
-
-  defined_tags        = tomap(var.custom_tags)
-  display_name        = "${var.cluster_id}-login"
-
-  metadata            = {
-    user_data = var.config
-  }
-
-  source_details {
-    source_id   = var.os_image
-    source_type = "image"
-  }
-}
-
-## Instance Configuration (compute)
-resource "oci_core_instance_configuration" "compute" {
+## Instance Configuration
+resource "oci_core_instance_configuration" "default" {
   compartment_id = var.compartment_ocid
 
   defined_tags   = tomap(var.custom_tags)
-  display_name   = "${var.cluster_id}-compute-instance-config"
+  display_name   = "${var.cluster_id}-instance-config"
 
   instance_details {
     instance_type = "compute"
@@ -54,7 +26,7 @@ resource "oci_core_instance_configuration" "compute" {
       compartment_id = var.compartment_ocid
 
       create_vnic_details {
-        assign_public_ip       = "false"
+        assign_public_ip       = var.public
         defined_tags           = tomap(var.custom_tags)
         display_name           = "${var.cluster_id}-instance-config-vnic"
         skip_source_dest_check = "false"
@@ -66,7 +38,7 @@ resource "oci_core_instance_configuration" "compute" {
         user_data = var.config
       }
 
-      shape          = var.compute_type
+      shape          = var.type
 
       source_details {
         source_type = "image"
