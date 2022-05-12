@@ -14,8 +14,7 @@
 
 variable "compartment_id" {}
 variable "replicas" {}
-variable "login_type" {}
-variable "compute_type" {}
+variable "type" {}
 variable "public" {}
 variable "name" {}
 variable "cluster_id" {}
@@ -26,3 +25,4 @@ variable "subnet" {}
 variable "os_image" {}
 #variable "firewall" {}
 variable "custom_tags" {}
+variable "availability_domain" {}

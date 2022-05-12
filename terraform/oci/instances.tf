@@ -13,46 +13,61 @@
 # limitations under the License.
 
 module "instances_login" {
-  source      = "./instance"
+  source              = "./instance"
 
-  cluster_id  = local.cluster_id
-  name        = "${local.cluster_id}-login"
-  type        = "BM.HPC2.36"
-  replicas    = 1
-  public      = true
-  preemptible = false
+  cluster_id          = local.cluster_id
+  name                = "${local.cluster_id}-login"
+  type                = "BM.HPC2.36"
+  replicas            = 1
+  public              = true
+  preemptible         = false
+  ssh                 = var.ssh
 
-  os_image    = var.ubuntu_2004[var.region]
-  subnet      = oci_core_subnet.public.id
-  config      = data.cloudinit_config.ubuntu2004.rendered
+  os_image            = var.ubuntu_2004[var.region]
+  subnet              = oci_core_subnet.public.id
+  config              = data.cloudinit_config.ubuntu2004.rendered
+
+  compartment_ocid    = var.compartment_ocid
+  custom_tags         = var.custom_tags
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
 }
 
 module "instances_x8v100" {
-  source       = "./instance"
+  source             = "./instance"
 
-  cluster_id   = local.cluster_id
-  name         = "${local.cluster_id}-x8v100"
-  type         = "BM.GPU3.8"
-  replicas     = var.replicas.x8v100
-  public       = false
-  preemptible  = var.preemptible
+  cluster_id         = local.cluster_id
+  name               = "${local.cluster_id}-x8v100"
+  type               = "BM.GPU3.8"
+  replicas           = var.replicas.x8v100
+  public             = false
+  preemptible        = var.preemptible
+  ssh                = var.ssh
 
-  os_image     = var.ubuntu_2004[var.region]
-  subnet       = oci_core_subnet.private.id
-  config       = data.cloudinit_config.ubuntu2004.rendered
+  os_image            = var.ubuntu_2004[var.region]
+  subnet              = oci_core_subnet.private.id
+  config              = data.cloudinit_config.ubuntu2004.rendered
+
+  compartment_ocid    = var.compartment_ocid
+  custom_tags         = var.custom_tags
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
 }
 
 module "instances_x8a100" {
-  source       = "./instance"
+  source              = "./instance"
 
-  cluster_id   = local.cluster_id
-  name         = "${local.cluster_id}-x8a100"
-  type         = "BM.GPU4.8"
-  replicas     = var.replicas.x8a100
-  public       = false
-  preemptible  = var.preemptible
+  cluster_id          = local.cluster_id
+  name                = "${local.cluster_id}-x8a100"
+  type                = "BM.GPU4.8"
+  replicas            = var.replicas.x8a100
+  public              = false
+  preemptible         = var.preemptible
+  ssh                 = var.ssh
 
-  os_image     = var.ubuntu_2004[var.region]
-  subnet       = oci_core_subnet.private.id
-  config       = data.cloudinit_config.ubuntu2004.rendered
+  os_image            = var.ubuntu_2004[var.region]
+  subnet              = oci_core_subnet.private.id
+  config              = data.cloudinit_config.ubuntu2004.rendered
+
+  compartment_ocid    = var.compartment_ocid
+  custom_tags         = var.custom_tags
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
 }

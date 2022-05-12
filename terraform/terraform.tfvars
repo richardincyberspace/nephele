@@ -25,7 +25,7 @@
 #zone    = "us-west-2a"
 
 # OCI
-region   = "ap-tokyo-1"
+#region   = "ap-tokyo-1"
 
 ssh = {
   user         = "nvidia"

@@ -27,7 +27,10 @@ data "oci_core_instance" "instance_pool_ips" {
 }
 
 output "public_ips" {
-  value = "${oci_core_instance.login.public_ip}"
+  depends_on = [
+    data.oci_core_instance_pool_instances.instance_pool_instances,
+  ]
+  value = data.oci_core_instance.instance_pool_ips.*.public_ips
 }
 
 output "private_ips" {
