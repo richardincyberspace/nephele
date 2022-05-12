@@ -17,9 +17,6 @@ variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 
-#variable "ssh_public_key" { default = "~/.ssh/id_rsa.pub" }
-#variable "ssh_private_key" { default = "~/.oci/oci_api_key.pem"}
-
 variable "compartment_ocid" {
   description = "Compartment OCID for OCI"
   type        = string
