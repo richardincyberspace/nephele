@@ -30,12 +30,12 @@ output "public_ips" {
   depends_on = [
     data.oci_core_instance_pool_instances.instance_pool_instances,
   ]
-  value = data.oci_core_instance.instance_pool_ips.*.public_ips
+  value = var.replicas > 0 ? join(",", data.oci_core_instance.instance_pool_ips.*.public_ip): ""
 }
 
 output "private_ips" {
   depends_on = [
     data.oci_core_instance_pool_instances.instance_pool_instances,
   ]
-  value = data.oci_core_instance.instance_pool_ips.*.private_ip
+  value = var.replicas > 0 ? join(",", data.oci_core_instance.instance_pool_ips.*.private_ip): ""
 }
