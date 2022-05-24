@@ -24,6 +24,7 @@ module "instances_login" {
   ssh                 = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
+  os_disk_size        = "1000"
   subnet              = oci_core_subnet.public.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
@@ -44,6 +45,7 @@ module "instances_x8v100" {
   ssh                = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
+  os_disk_size        = "2000"
   subnet              = oci_core_subnet.private.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
@@ -64,6 +66,7 @@ module "instances_x8a100" {
   ssh                 = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
+  os_disk_size        = "2000"
   subnet              = oci_core_subnet.private.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
