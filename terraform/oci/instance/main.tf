@@ -51,7 +51,7 @@ resource "oci_core_instance_configuration" "default" {
 
 resource "oci_core_instance_pool" "default" {
   compartment_id            = var.compartment_ocid
-  instance_configuration_id = oci_core_instance_configuration.compute.id
+  instance_configuration_id = oci_core_instance_configuration.default.id
   placement_configurations {
     availability_domain = var.availability_domain
     primary_subnet_id   = var.subnet
