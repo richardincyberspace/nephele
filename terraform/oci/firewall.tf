@@ -17,39 +17,31 @@ resource "oci_core_security_list" "public_security_list_id" {
   vcn_id         = oci_core_vcn.default.id
 
   defined_tags   = tomap(var.custom_tags)
-  display_name = "${local.cluster_id}-public-security"
+  display_name   = "${local.cluster_id}-public-security"
 
   egress_security_rules {
     destination = "0.0.0.0/0"
-    protocol    = "6" // TCP protocol
+    protocol    = "all"
+
+    description = "Allow outbound traffic"
   }
 
   ingress_security_rules {
-    protocol  = "6"
-    source    = "0.0.0.0/0"
-    stateless = "false"
+    protocol    = "6"
+    source      = "0.0.0.0/0"
 
+    description = "Allow inbound SSH traffic"
     tcp_options {
-      min = "22"  // Inbound SSH
-      max = "22"  // Inbound SSH
+      min = "22"
+      max = "22"
     }
   }
 
   ingress_security_rules {
-    protocol  = "6"
-    source    = "0.0.0.0/0"
-    stateless = "false"
+    protocol    = "all"
+    source      = oci_core_vcn.default.cidr_block
 
-    tcp_options {
-      min = "80"
-      max = "80"
-    }
-  }
-
-  ingress_security_rules {
-    protocol  = "6"
-    source    = oci_core_vcn.default.cidr_block
-    stateless = "false"
+    description = "Allow inbound traffic within VPC"
   }
 }
 
@@ -58,18 +50,20 @@ resource "oci_core_security_list" "private_security_list_id" {
   vcn_id         = oci_core_vcn.default.id
 
   defined_tags   = tomap(var.custom_tags)
-  display_name = "${local.cluster_id}-private-security"
+  display_name   = "${local.cluster_id}-private-security"
 
   egress_security_rules {
     destination = "0.0.0.0/0"
-    protocol    = "6" // TCP protocol
+    protocol    = "all"
+
+    description = "Allow outbound traffic"
   }
 
   ingress_security_rules {
-    protocol = "6"
-    source = oci_core_vcn.default.cidr_block
-    stateless = "false"
+    protocol    = "6"
+    source      = "0.0.0.0/0"
 
+    description = "Allow inbound SSH traffic"
     tcp_options {
       min = "22"
       max = "22"
@@ -77,13 +71,9 @@ resource "oci_core_security_list" "private_security_list_id" {
   }
 
   ingress_security_rules {
-    protocol = "6"
-    source = oci_core_vcn.default.cidr_block
-    stateless = "false"
+    protocol    = "all"
+    source      = oci_core_vcn.default.cidr_block
 
-    tcp_options {
-      min = "80"
-      max = "80"
-    }
+    description = "Allow inbound traffic within VPC"
   }
 }
