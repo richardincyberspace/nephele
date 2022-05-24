@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "compartment_id" {}
+variable "compartment_ocid" {}
 variable "replicas" {}
 variable "type" {}
 variable "public" {}
