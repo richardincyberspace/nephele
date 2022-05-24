@@ -41,7 +41,7 @@ resource "oci_core_security_list" "public_security_list_id" {
     protocol    = "all"
     source      = oci_core_vcn.default.cidr_block
 
-    description = "Allow inbound traffic within VPC"
+    description = "Allow inbound traffic within VCN"
   }
 }
 
@@ -74,6 +74,6 @@ resource "oci_core_security_list" "private_security_list_id" {
     protocol    = "all"
     source      = oci_core_vcn.default.cidr_block
 
-    description = "Allow inbound traffic within VPC"
+    description = "Allow inbound traffic within VCN"
   }
 }
