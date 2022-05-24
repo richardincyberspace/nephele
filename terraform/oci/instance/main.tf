@@ -41,8 +41,9 @@ resource "oci_core_instance_configuration" "default" {
       shape          = var.type
 
       source_details {
-        source_type = "image"
-        image_id    = var.os_image
+        source_type             = "image"
+        boot_volume_size_in_gbs = var.os_disk_size
+        image_id                = var.os_image
       }
     }
   }
