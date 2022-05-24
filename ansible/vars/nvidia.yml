@@ -15,6 +15,7 @@
 ---
 nvidia_driver_package_version: "470.103.01-1"
 nvidia_fabric_manager_package_version: "470.103.01-1"
+nvidia_driver_branch: "470"
 
 nvidia_gdrcopy_package_version: "2.3-1"
 
