@@ -16,6 +16,11 @@
 
 export CONTAINERIZED_BUILD=1
 
+case "${CLOUD_PROVIDER}" in
+oci)
+  bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+esac
+
 apt-get update -yes
 
 export arch=$(dpkg --print-architecture)
