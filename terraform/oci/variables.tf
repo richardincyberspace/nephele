@@ -12,10 +12,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-variable "tenancy_ocid" {}
-variable "user_ocid" {}
-variable "fingerprint" {}
-variable "private_key_path" {}
+variable "tenancy_ocid" {
+  description = "Tenancy OCID for OCI"
+  type        = string
+  default     = null
+}
+
+variable "user_ocid" {
+  description = "User OCID for OCI"
+  type        = string
+  default     = null
+}
+
+variable "fingerprint" {
+  description = "Fingerprint for OCI"
+  type        = string
+  default     = null
+}
+
+variable "private_key_path" {
+  description = "Private Key Path for OCI"
+  type        = string
+  default     = null
+}
 
 variable "compartment_ocid" {
   description = "Compartment OCID for OCI"
@@ -29,6 +48,12 @@ variable "region" {
   default     = null
 }
 
+variable "os_disk_size" {
+  description = "Size of OS Disk for each instance"
+  type        = string
+  default     = "2000"
+}
+
 variable "ubuntu_2004" {
   # https://docs.oracle.com/en-us/iaas/images/
   description = "OCID for Ubuntu 2004 image in different regions"
@@ -37,9 +62,9 @@ variable "ubuntu_2004" {
     "us-sanjose-1": "ocid1.image.oc1.us-sanjose-1.aaaaaaaarlhoz4n2z2v6vbml3yausxd3jfp4i642ofr2kmafhkjm6fwmq2dq"
     "eu-frankfurt-1": "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaavcrpbwmm75t6azhxgepxah6vigiwwvruti3gj2frhuxnvhzn3e5a"
     "ap-tokyo-1": "ocid1.image.oc1.ap-tokyo-1.aaaaaaaaiqnzylthf6siyhwrnwu7fzci2clbp4rpdtuok6byikb727nklc5q"
+    "ap-osaka-1": "ocid1.image.oc1.ap-osaka-1.aaaaaaaa4lucxlnba6vpf76reg2x6gfxc7pttromfervverqp3r5ymjz2icq"
   }  
 }
-
 
 variable "vcn_cidr" {
   description = "Address prefix to use for the VPC"

@@ -24,6 +24,5 @@ variable "config" {}
 variable "subnet" {}
 variable "os_image" {}
 variable "os_disk_size" {}
-#variable "firewall" {}
 variable "custom_tags" {}
 variable "availability_domain" {}

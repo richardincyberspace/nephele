@@ -26,7 +26,7 @@ provider "oci" {
   tenancy_ocid     = var.tenancy_ocid
   user_ocid        = var.user_ocid
   fingerprint      = var.fingerprint
-  private_key_path = var.ssh.privkey
+  private_key_path = var.private_key_path
   region           = var.region
 }
 
@@ -36,8 +36,4 @@ resource "random_pet" "generator" {
 
 locals {
   cluster_id = "nephele-${random_pet.generator.id}"
-}
-
-data "oci_identity_availability_domains" "default" {
-  compartment_id = var.compartment_ocid
 }

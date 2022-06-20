@@ -12,25 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-resource "oci_core_security_list" "public_security_list_id" {
+resource "oci_core_security_list" "default" {
   compartment_id = var.compartment_ocid
   vcn_id         = oci_core_vcn.default.id
 
-  defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-public-security"
-
-  egress_security_rules {
-    destination = "0.0.0.0/0"
-    protocol    = "all"
-
-    description = "Allow outbound traffic"
-  }
-
   ingress_security_rules {
+    description = " Allow inbound SSH traffic"
     protocol    = "6"
     source      = "0.0.0.0/0"
-
-    description = "Allow inbound SSH traffic"
     tcp_options {
       min = "22"
       max = "22"
@@ -38,42 +27,15 @@ resource "oci_core_security_list" "public_security_list_id" {
   }
 
   ingress_security_rules {
+    description = "Allow inbound traffic within VCN"
     protocol    = "all"
     source      = oci_core_vcn.default.cidr_block
-
-    description = "Allow inbound traffic within VCN"
+    #source      = "0.0.0.0/0"
   }
-}
-
-resource "oci_core_security_list" "private_security_list_id" {
-  compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.default.id
-
-  defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-private-security"
 
   egress_security_rules {
+    description = "Allow outbound traffic"
     destination = "0.0.0.0/0"
     protocol    = "all"
-
-    description = "Allow outbound traffic"
-  }
-
-  ingress_security_rules {
-    protocol    = "6"
-    source      = "0.0.0.0/0"
-
-    description = "Allow inbound SSH traffic"
-    tcp_options {
-      min = "22"
-      max = "22"
-    }
-  }
-
-  ingress_security_rules {
-    protocol    = "all"
-    source      = oci_core_vcn.default.cidr_block
-
-    description = "Allow inbound traffic within VCN"
   }
 }

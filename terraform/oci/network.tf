@@ -13,79 +13,76 @@
 # limitations under the License.
 
 resource "oci_core_vcn" "default" {
-  compartment_id = var.compartment_ocid
-
   cidr_block     = var.vcn_cidr
+  compartment_id = var.compartment_ocid
   defined_tags   = tomap(var.custom_tags)
   display_name   = "${local.cluster_id}-vcn"
 }
 
+data "oci_identity_availability_domains" "default" {
+  compartment_id = var.compartment_ocid
+}
+
+# Public network (public subnet, ig, rt)
 resource "oci_core_subnet" "public" {
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
   cidr_block          = var.subnet_cidr.public
   compartment_id      = var.compartment_ocid
-  vcn_id              = oci_core_vcn.default.id
-
-  availability_domain = lookup(data.oci_identity_availability_domains.default.availability_domains[0], "name")
   defined_tags        = tomap(var.custom_tags)
   display_name        = "${local.cluster_id}-public-subnet"
   route_table_id      = oci_core_route_table.public.id
-  security_list_ids   = [oci_core_security_list.public_security_list_id.id]
-}
-
-resource "oci_core_subnet" "private" {
-  cidr_block          = var.subnet_cidr.private
-  compartment_id      = var.compartment_ocid
-  vcn_id              = oci_core_vcn.default.id
-
-  availability_domain = lookup(data.oci_identity_availability_domains.default.availability_domains[0], "name")
-  defined_tags        = tomap(var.custom_tags)
-  display_name        = "${local.cluster_id}-private-subnet"
-  route_table_id      = oci_core_route_table.private.id
-  security_list_ids   = [oci_core_security_list.private_security_list_id.id]
+  security_list_ids   = [oci_core_security_list.default.id]
+  vcn_id              = oci_core_vcn.default.id 
 }
 
 resource "oci_core_internet_gateway" "default" {
   compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.default.id
-
   defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-gateway"
+  display_name   = "${local.cluster_id}-ig-gateway"
   enabled        = "true"
+  vcn_id         = oci_core_vcn.default.id
 }
 
 resource "oci_core_route_table" "public" {
   compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.default.id
-
   defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-public-route"
+  display_name   = "${local.cluster_id}-public-route-table"
   route_rules {
-    network_entity_id = oci_core_internet_gateway.default.id
-
     destination       = "0.0.0.0/0"
     destination_type  = "CIDR_BLOCK"
+    network_entity_id = oci_core_internet_gateway.default.id
   }
+  vcn_id         = oci_core_vcn.default.id
+}
+
+# Private network (private subnet, ng, rt)
+resource "oci_core_subnet" "private" {
+  availability_domain = data.oci_identity_availability_domains.default.availability_domains[0].name
+  cidr_block          = var.subnet_cidr.private
+  compartment_id      = var.compartment_ocid
+  defined_tags        = tomap(var.custom_tags)
+  display_name        = "${local.cluster_id}-private-subnet"
+  route_table_id      = oci_core_route_table.private.id
+  security_list_ids   = [oci_core_security_list.default.id]
+  vcn_id              = oci_core_vcn.default.id
 }
 
 resource "oci_core_nat_gateway" "default" {
-  compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.default.id
-
   block_traffic  = "false"
+  compartment_id = var.compartment_ocid
   defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-nat"
+  display_name   = "${local.cluster_id}-nat-gateway"
+  vcn_id         = oci_core_vcn.default.id
 }
 
 resource "oci_core_route_table" "private" {
   compartment_id = var.compartment_ocid
-  vcn_id         = oci_core_vcn.default.id
-
   defined_tags   = tomap(var.custom_tags)
-  display_name   = "${local.cluster_id}-private-route"
+  display_name   = "${local.cluster_id}-private-route-table"
   route_rules {
-    network_entity_id = oci_core_nat_gateway.default.id
-
     destination       = "0.0.0.0/0"
     destination_type  = "CIDR_BLOCK"
+    network_entity_id = oci_core_nat_gateway.default.id
   }
+  vcn_id         = oci_core_vcn.default.id
 }

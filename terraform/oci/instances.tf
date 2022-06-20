@@ -17,14 +17,14 @@ module "instances_login" {
 
   cluster_id          = local.cluster_id
   name                = "${local.cluster_id}-login"
-  type                = "BM.HPC2.36"
+  type                = "BM.Standard.E3.128"
   replicas            = 1
   public              = true
   preemptible         = false
   ssh                 = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
-  os_disk_size        = "1000"
+  os_disk_size        = var.os_disk_size
   subnet              = oci_core_subnet.public.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
@@ -45,7 +45,7 @@ module "instances_x8v100" {
   ssh                = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
-  os_disk_size        = "2000"
+  os_disk_size        = var.os_disk_size
   subnet              = oci_core_subnet.private.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
@@ -66,7 +66,7 @@ module "instances_x8a100" {
   ssh                 = var.ssh
 
   os_image            = var.ubuntu_2004[var.region]
-  os_disk_size        = "2000"
+  os_disk_size        = var.os_disk_size
   subnet              = oci_core_subnet.private.id
   config              = data.cloudinit_config.ubuntu2004.rendered
 
