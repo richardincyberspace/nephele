@@ -54,3 +54,6 @@
   when: nfs_exports|length and ansible_os_family == "RedHat"
   tags:
     - nfs
+
+- iptables:
+    flush: yes
