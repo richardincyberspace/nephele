@@ -62,7 +62,7 @@ variable "ubuntu_2004" {
     "us-sanjose-1": "ocid1.image.oc1.us-sanjose-1.aaaaaaaarlhoz4n2z2v6vbml3yausxd3jfp4i642ofr2kmafhkjm6fwmq2dq"
     "eu-frankfurt-1": "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaavcrpbwmm75t6azhxgepxah6vigiwwvruti3gj2frhuxnvhzn3e5a"
     "ap-tokyo-1": "ocid1.image.oc1.ap-tokyo-1.aaaaaaaaiqnzylthf6siyhwrnwu7fzci2clbp4rpdtuok6byikb727nklc5q"
-    "ap-osaka-1": "ocid1.image.oc1.ap-osaka-1.aaaaaaaa4lucxlnba6vpf76reg2x6gfxc7pttromfervverqp3r5ymjz2icq"
+    "ap-osaka-1": "ocid1.image.oc1.ap-osaka-1.aaaaaaaamgf3qgzwv4nen7kv6e345uefzt5j4w22glyhem3epk76b73gfn6a"
   }  
 }
 
@@ -124,8 +124,5 @@ variable "replicas" {
 # Modify with custom tags for your account
 variable "custom_tags" {
   default = {
-    "tag1": "value1",
-    "tag2": "value2",
-    "tag3": "value3"
     }
 }

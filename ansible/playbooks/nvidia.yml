@@ -29,14 +29,14 @@
         - always
 
     - block:
-      - name: install driver
-        include_role:
-          name: nvidia.nvidia_driver
-          apply:
-            tags:
-              - nvidia_driver
-        tags:
-          - always
+      # - name: install driver
+      #   include_role:
+      #     name: nvidia.nvidia_driver
+      #     apply:
+      #       tags:
+      #         - nvidia_driver
+      #   tags:
+      #     - always
 
       - name: start persistenced
         service:
@@ -68,10 +68,10 @@
           state: started
           daemon_reload: true
 
-      - name: install fabric manager
-        include_role:
-          name: nvidia-fabric-manager
-        when: ansible_local.nvlinks.count
+      # - name: install fabric manager
+      #   include_role:
+      #     name: nvidia-fabric-manager
+      #   when: ansible_local.nvlinks.count
 
       - name: install gdrcopy
         include_role:

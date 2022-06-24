@@ -16,6 +16,8 @@
 
 set -eu
 
+set -x 
+
 source nephele.conf
 
 cmds=("terraform" "ansible")
@@ -91,11 +93,11 @@ create() {
 
     echo "Provisioning instances..."
     # Fix Fabric Ansible Playbook
-    #ansible-playbook -f "${PARALLELISM}" playbooks/fabric.yml
+    ansible-playbook -f "${PARALLELISM}" playbooks/fabric.yml
     ansible-playbook -f "${PARALLELISM}" playbooks/nvidia.yml
     ansible-playbook -f "${PARALLELISM}" playbooks/containers.yml
     # Fix SLURM playbook
-    #ansible-playbook -f "${PARALLELISM}" playbooks/slurm.yml
+    ansible-playbook -f "${PARALLELISM}" playbooks/slurm.yml
     popd
 
     echo "Done"

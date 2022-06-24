@@ -55,5 +55,5 @@
   tags:
     - nfs
 
-- iptables:
-    flush: yes
+# - iptables:
+#     flush: yes

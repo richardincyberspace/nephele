@@ -17,7 +17,8 @@ module "instances_login" {
 
   cluster_id          = local.cluster_id
   name                = "${local.cluster_id}-login"
-  type                = "BM.Standard.E3.128"
+#  type                = "BM.Standard.E3.128"
+  type                = "VM.Standard.E2.4"
   replicas            = 1
   public              = true
   preemptible         = false
